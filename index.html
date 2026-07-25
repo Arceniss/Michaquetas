@@ -622,7 +622,8 @@
         .modal-content {
             background: var(--bg-card);
             width: 100%;
-            height: 90vh;
+            height: 100%; /* Se cambia para adaptarse mejor */
+            max-height: 90dvh; /* dvh se adapta automáticamente al teclado en móviles modernos */
             border-top-left-radius: 28px;
             border-top-right-radius: 28px;
             padding: 24px 20px;
@@ -633,6 +634,15 @@
             position: relative;
             border-top: 5px solid var(--primary);
             overflow: hidden;
+        }
+
+        .form-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding-right: 5px;
+            padding-bottom: 150px; /* Aumentado drásticamente para permitir que el scroll suba sobre el teclado */
+            margin-top: 10px;
         }
 
         .modal-overlay.show .modal-content {
@@ -1161,7 +1171,7 @@
                         <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                 </button>
-                
+
                 <button class="btn-header-icon" onclick="openShareModal()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -1589,7 +1599,7 @@
             document.body.classList.remove('modo-cliente');
             document.body.classList.add('modo-admin');
             document.getElementById('headerSubtitle').innerText = "PANEL DE ADMINISTRACIÓN";
-            
+
             // Muestra el botón de alternar vista únicamente al administrador
             const btnToggle = document.getElementById('btnToggleMode');
             if (btnToggle) btnToggle.style.display = "flex";
@@ -1635,7 +1645,7 @@
                 TEXTO_PLACEHOLDER = (placeholderSheet && placeholderSheet.toString().trim() !== "") 
                     ? placeholderSheet.toString().trim() 
                     : "Tu nombre y apellido...";
-                
+
                 //TEXTO_MENSAJE = data.mensaje || "Hola, mi nombre es *{nombre}*.\nMe interesa el siguiente pedido:\n\n";
 
                 const rawMensaje = data.mensaje || "Hola, mi nombre es *{nombre}*.\nMe interesa el siguiente pedido:\n\n";
@@ -1709,8 +1719,9 @@
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             if (btnElement) btnElement.classList.add('active');
             renderProducts();
-
-            if (IS_ADMIN && cat === 'todas') {
+            
+            // AQUÍ ESTÁ EL CAMBIO: Validamos visualmente el modo-admin
+            if (document.body.classList.contains('modo-admin') && cat === 'todas') {
                 todosClickCount++;
                 clearTimeout(todosClickTimer);
                 todosClickTimer = setTimeout(() => { todosClickCount = 0; }, 500);
@@ -1732,10 +1743,10 @@
 
             const filtered = products.filter(p => {
                 const matchCat = (currentCategory === 'todas' || p.cat === currentCategory);
-                
+
                 // Filtro de búsqueda por texto (Se conserva y aplica para ambos modos)
                 const matchSearch = p.name.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
-                
+
                 if (!isVisualizingAsAdmin) {
                     // Filtros exclusivos del cliente (oculta productos inactivos)
                     return p.available && matchCat && matchSearch;
@@ -1825,20 +1836,24 @@
         }
 
         function processImageToWebp(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader(); reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image(); img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const size = Math.min(img.width, img.height);
-                        const startX = (img.width - size) / 2, startY = (img.height - size) / 2;
-                        canvas.width = 400; canvas.height = 400; const ctx = canvas.getContext('2d');
-                        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 400, 400);
-                        canvas.toBlob((blob) => { resolve(blob); }, 'image/webp', 0.80);
-                    };
+            return new Promise((resolve, reject) => {
+                const img = new Image(); 
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const size = Math.min(img.width, img.height);
+                    const startX = (img.width - size) / 2, startY = (img.height - size) / 2;
+                    canvas.width = 400; canvas.height = 400; 
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, startX, startY, size, size, 0, 0, 400, 400);
+                    canvas.toBlob((blob) => { resolve(blob); }, 'image/webp', 0.80);
                 };
+                
+                // Si la foto no se puede leer (formato incompatible), rechazamos en lugar de congelar
+                img.onerror = () => reject(new Error("Formato de imagen no válido")); 
+                
+                // createObjectURL es mucho más rápido y estable que FileReader
+                img.src = URL.createObjectURL(file); 
             });
         }
 
@@ -1901,7 +1916,12 @@
             document.getElementById('productForm').reset();
             previewImg.style.display = 'none'; uploadText.style.display = 'flex'; currentImageFile = null;
             if (imgCam) imgCam.value = ""; if (imgGal) imgGal.value = "";
-            document.getElementById('btnEliminar').style.display = 'none'; document.getElementById('btnGuardar').innerText = "Guardar Nuevo";
+            document.getElementById('btnEliminar').style.display = 'none'; 
+            
+            // Forzamos al botón a desbloquearse siempre que abrimos el panel
+            const btnGuardar = document.getElementById('btnGuardar');
+            btnGuardar.innerText = "Guardar Nuevo";
+            btnGuardar.disabled = false; 
 
             if (id) {
                 const p = products.find(x => x.id.toString() === id.toString());
@@ -1911,8 +1931,12 @@
                 document.getElementById('prodCat').value = p.cat; document.getElementById('prodDesc').value = p.desc;
                 document.getElementById('prodActivo').checked = p.available;
                 previewImg.src = p.img; previewImg.style.display = 'block'; uploadText.style.display = 'none';
-                document.getElementById('btnEliminar').style.display = 'grid'; document.getElementById('btnGuardar').innerText = "Actualizar";
-            } else { document.getElementById('editId').value = ""; document.getElementById('oldImgUrl').value = ""; }
+                document.getElementById('btnEliminar').style.display = 'grid'; 
+                btnGuardar.innerText = "Actualizar";
+            } else { 
+                document.getElementById('editId').value = ""; 
+                document.getElementById('oldImgUrl').value = ""; 
+            }
             document.getElementById('formModal').classList.add('show');
         }
 
@@ -1928,16 +1952,18 @@
                 let finalImg = document.getElementById('oldImgUrl').value;
                 const file = currentImageFile;
 
-                if (!document.getElementById('editId').value && !file) {
+                // CAMBIO 1: Subimos el itemId aquí arriba
+                const itemId = document.getElementById('editId').value; 
+
+                if (!itemId && !file) {
                     showAlert("Imagen Faltante", "Por favor, toma una foto o selecciona una de la galería.");
                     btn.innerText = "Guardar"; btn.disabled = false; return;
                 }
 
                 if (file) {
-                    // Si el backend no devolvió ninguna API Key de ImgBB para este shop
                     if (!IMGBB_KEY) {
                         showAlert("Configuración Pendiente", "Este perfil de emprendedor no tiene una clave de ImgBB configurada en Google Sheets. No se pueden subir imágenes.");
-                        btn.innerText = "Guardar Nuevo"; btn.disabled = false; return;
+                        btn.innerText = itemId ? "Actualizar" : "Guardar Nuevo"; btn.disabled = false; return;
                     }
 
                     try {
@@ -1945,7 +1971,7 @@
                         const formData = new FormData(); formData.append("image", processedBlob, "foto.webp");
                         const imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
                         const imgData = await imgRes.json(); 
-                        
+
                         if (imgData && imgData.data && imgData.data.url) {
                             finalImg = imgData.data.url;
                         } else {
@@ -1957,7 +1983,6 @@
                     }
                 }
 
-                const itemId = document.getElementById('editId').value;
                 const datos = {
                     action: itemId ? "update" : "create", id: itemId,
                     nombre: document.getElementById('prodName').value, categoria: document.getElementById('prodCat').value,
@@ -1967,8 +1992,18 @@
                     shop: SHOP_ID
                 };
 
-                await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(datos), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: "follow" });
-                closeFormModal(); loadProducts(); btn.disabled = false;
+                // CAMBIO 2: Agregamos try-catch-finally
+                try {
+                    await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(datos), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: "follow" });
+                    closeFormModal(); 
+                    loadProducts(); 
+                } catch (error) {
+                    showAlert("Error de guardado", "Hubo un problema de conexión al guardar el producto.");
+                } finally {
+                    // Esto asegura que el botón siempre vuelva a su estado normal
+                    btn.innerText = itemId ? "Actualizar" : "Guardar Nuevo"; 
+                    btn.disabled = false;
+                }
             });
         }
 
@@ -2156,7 +2191,7 @@
             const body = document.body;
             const icon = document.getElementById('toggleModeIcon');
             const subtitle = document.getElementById('headerSubtitle');
-            
+
             if (body.classList.contains('modo-admin')) {
                 // Cambiar a vista de cliente
                 body.classList.remove('modo-admin');
@@ -2172,7 +2207,7 @@
                 // Icono Ojo Abierto (Ir a vista cliente)
                 if (icon) icon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
             }
-            
+
             // Volvemos a renderizar los productos y actualizar el carrito para que se apliquen los controles adecuados
             renderProducts();
             updateCartBar();
