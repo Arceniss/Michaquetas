@@ -5,29 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>El Séptimo Anillo</title>
+    <title>Michaquetas</title>
 
     <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* === VARIABLES Y DISEÑO GLOBAL === */
         :root {
-            --bg-body: #F7F7F9;
-            --bg-card: #ffffff;
+            /* Colores de Fondo y Estructura */
+            --bg-body: #F4F7F9;         
+            --bg-card: #FFFFFF;
             --bg-panel: rgba(255, 255, 255, 0.95);
-            --primary: #2B2D42;
-            --accent: #FF5A5F;
-            --accent-light: #ffeeef;
-            --promo-purple: #7209B7;
-            --text-dark: #1f2937;
-            --text-muted: #8d99ae;
-            --border-color: #e5e7eb;
+            --bg-light: #F1F5F9;        /* Reemplaza #f1f5f9 (botones secundarios y elementos neutros) */
+            --bg-hover: #F8FAFC;        /* Reemplaza #f8fafc (fondos de inputs e imágenes) */
+            
+            /* Colores Principales y sus equivalentes RGB para opacidades */
+            --primary: #1F3A5A;         
+            --primary-rgb: 31, 58, 90;  /* Para sombras basadas en el color primario */
+            
+            --accent: #E98C30;          
+            --accent-rgb: 233, 140, 48; /* Para sombras y efectos de realce */
+            --accent-light: #FDF3E9;    
+            
+            --promo-color: #56A9C5;    
+            --promo-light: #E2F3F8;     /* Reemplaza #E2F3F8 (degradados del icono) */
+            
+            /* Tipografía y Textos */
+            --text-dark: #122133;       
+            --text-dark-rgb: 18, 33, 51;/* Para fondos oscuros translúcidos (modales) */
+            --text-muted: #7E93A8;      
+            
+            /* Bordes, Estados y Alertas */
+            --border-color: #E2E8F0;
             --danger: #ef4444;
+            --danger-light: #fee2e2;    /* Reemplaza #fee2e2 */
             --success: #10b981;
+            
             --font-main: 'Outfit', sans-serif;
             --radius: 20px;
         }
@@ -46,7 +62,7 @@
             padding-bottom: 110px;
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(var(--text-dark-rgb), 0.1);
             position: relative;
         }
 
@@ -79,7 +95,7 @@
             top: 0;
             z-index: 50;
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 30px rgba(var(--text-dark-rgb), 0.02);
         }
 
         .brand-header {
@@ -99,7 +115,6 @@
         .brand-info {
             flex: 1;
             min-width: 0;
-            /* Permite que el texto se trunque si se queda sin espacio */
         }
 
         .brand-info h1 {
@@ -110,8 +125,6 @@
             color: var(--primary);
             display: flex;
             align-items: center;
-
-            /* Ajustes para nombres extra largos */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -138,7 +151,7 @@
         }
 
         .btn-header-icon {
-            background: #f1f5f9;
+            background: var(--bg-light);
             color: var(--primary);
             border: none;
             width: 40px;
@@ -154,7 +167,7 @@
         .btn-header-icon:active {
             transform: scale(0.95);
             background: var(--primary);
-            color: #fff;
+            color: var(--bg-card);
         }
 
         /* Categorías y Búsqueda */
@@ -243,7 +256,7 @@
             width: 100%;
             height: 100%;
             padding: 0 15px 0 40px;
-            background-color: #ffffff;
+            background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             font-family: var(--font-main);
@@ -299,12 +312,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(var(--text-dark-rgb), 0.03);
         }
 
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 25px rgba(var(--text-dark-rgb), 0.06);
         }
 
         .card:active {
@@ -313,8 +326,8 @@
 
         .card.selected {
             border-color: var(--accent);
-            background-color: #ffe7ec;
-            box-shadow: 0 6px 12px rgba(255, 90, 95, 0.08);
+            background-color: var(--accent-light);
+            box-shadow: 0 6px 12px rgba(var(--accent-rgb), 0.15); /* Sombra naranja dinámica */
         }
 
         .card.hidden-prod {
@@ -327,8 +340,8 @@
             position: absolute;
             top: 18px;
             right: 18px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
+            background: rgba(var(--text-dark-rgb), 0.7);
+            color: var(--bg-card);
             font-size: 12px;
             font-weight: 500;
             padding: 4px 8px;
@@ -343,7 +356,7 @@
             object-fit: cover;
             border-radius: 14px;
             margin-bottom: 12px;
-            background-color: #f8fafc;
+            background-color: var(--bg-hover);
         }
 
         .card-title {
@@ -413,11 +426,11 @@
 
         .btn-add:hover {
             background-color: var(--accent);
-            color: white;
+            color: var(--bg-card);
         }
 
         .btn-add.admin-edit {
-            background-color: #f1f5f9;
+            background-color: var(--bg-light);
             color: var(--text-muted);
         }
 
@@ -429,7 +442,7 @@
             height: 80%;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(43, 45, 66, 0.15);
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.15); /* Sombras basadas en variables */
             padding: 0 10px;
         }
 
@@ -439,32 +452,31 @@
 
         .stepper button {
             background: transparent;
-            color: white;
+            color: var(--bg-card);
             border: none;
             width: 36px;
             height: 100%;
             font-size: 20px;
-            font-weight: 500;
             cursor: pointer;
         }
 
         .stepper span {
             font-size: 14px;
             font-weight: 700;
-            color: white;
+            color: var(--bg-card);
             min-width: 20px;
             text-align: center;
         }
 
-        /* Tarjeta Promo ALS */
+        /* Tarjeta Promo ALS - Estilos Originales Restaurados */
         .card.ad-card {
-            border: 1px solid var(--promo-purple);
-            background: linear-gradient(135deg, #ffffff, #EFDFFF);
+            border: 1px solid var(--promo-color);
+            background: linear-gradient(135deg, var(--bg-card), var(--promo-light)); 
         }
 
         .ad-card-image {
-            background: var(--promo-purple);
-            color: white;
+            background: var(--promo-color);
+            color: var(--bg-card);
             font-weight: 700;
             font-size: 11px;
             letter-spacing: 0.5px;
@@ -489,19 +501,23 @@
         }
 
         .ad-title span {
-            color: var(--promo-purple);
+            color: var(--promo-color);
         }
 
         .ad-desc {
             font-size: 12px;
             color: var(--text-muted);
             line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .ad-action {
             margin-top: auto;
             font-size: 13px;
-            color: var(--promo-purple);
+            color: var(--promo-color);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -522,7 +538,7 @@
             border-top: 1px solid var(--border-color);
             transition: bottom 0.4s;
             z-index: 100;
-            box-shadow: 0 -10px 20px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -10px 20px -5px rgba(var(--text-dark-rgb), 0.05);
         }
 
         .checkout-bar.show {
@@ -532,7 +548,7 @@
         .btn-checkout {
             width: 100%;
             background-color: var(--accent);
-            color: #ffffff;
+            color: var(--bg-card);
             border: none;
             border-radius: 14px;
             padding: 10px 16px;
@@ -545,7 +561,7 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 6px 16px rgba(255, 90, 95, 0.3);
+            box-shadow: 0 6px 16px rgba(var(--accent-rgb), 0.35); /* Sombra naranja dinámica */
         }
 
         .checkout-qty {
@@ -575,18 +591,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(var(--text-dark-rgb), 0.2);
             cursor: pointer;
         }
 
         .fab-add {
             background-color: var(--accent);
-            color: white;
+            color: var(--bg-card);
             font-size: 28px;
         }
 
         .fab-visibility {
-            background-color: #f1f5f9;
+            background-color: var(--bg-light);
             color: var(--primary);
             transition: transform 0.2s ease;
             display: flex;
@@ -596,10 +612,6 @@
 
         .fab-visibility:active {
             transform: scale(0.95);
-        }
-
-        .fab-visibility svg {
-            /*margin-bottom: 2px;*/
         }
 
         .fab-visibility span {
@@ -616,7 +628,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(31, 41, 55, 0.7);
+            background: rgba(var(--text-dark-rgb), 0.7); /* Transparencia unificada */
             backdrop-filter: blur(4px);
             z-index: 200;
             display: flex;
@@ -636,9 +648,7 @@
             background: var(--bg-card);
             width: 100%;
             height: 100%;
-            /* Se cambia para adaptarse mejor */
             max-height: 90dvh;
-            /* dvh se adapta automáticamente al teclado en móviles modernos */
             border-top-left-radius: 28px;
             border-top-right-radius: 28px;
             padding: 24px 20px;
@@ -647,7 +657,6 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            border-top: 5px solid var(--primary);
             overflow: hidden;
         }
 
@@ -657,7 +666,6 @@
             overflow-y: auto;
             padding-right: 5px;
             padding-bottom: 150px;
-            /* Aumentado drásticamente para permitir que el scroll suba sobre el teclado */
             margin-top: 10px;
         }
 
@@ -665,15 +673,12 @@
             transform: translateY(0);
         }
 
-        /* ESTILO MEJORADO DEL BOTÓN CERRAR */
         .close-btn {
             position: absolute;
             top: 18px;
             right: 20px;
-            background: #f1f5f9;
-            /* Fondo sólido gris claro */
+            background: var(--bg-light);
             border: 1px solid var(--border-color);
-            /* Borde sutil */
             border-radius: 50%;
             width: 36px;
             height: 36px;
@@ -687,8 +692,7 @@
         }
 
         .close-btn:hover {
-            background: #e2e8f0;
-            /* Gris un poco más oscuro al tocar */
+            background: var(--border-color);
             transform: scale(1.05);
         }
 
@@ -703,10 +707,8 @@
         }
 
         .modal-overlay.centered-modal .modal-content {
-            height: auto;
             border-radius: 24px;
             transform: scale(0.95);
-            border-top: none;
             overflow: visible;
         }
 
@@ -729,7 +731,7 @@
             height: auto;
             max-height: 380px;
             object-fit: cover;
-            background-color: #f8fafc;
+            background-color: var(--bg-hover);
             border-radius: 18px;
             margin-bottom: 20px;
             border: 2px solid var(--text-muted);
@@ -769,7 +771,7 @@
         }
 
         .btn-empty-cart {
-            background: #fee2e2;
+            background: var(--danger-light);
             color: var(--danger);
             border: none;
             padding: 8px 14px;
@@ -782,7 +784,7 @@
         .customer-form-top input {
             width: 100%;
             padding: 14px;
-            background: #ffffff;
+            background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             font-family: var(--font-main);
@@ -803,7 +805,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #ffffff;
+            background-color: var(--bg-card);
             padding: 8px;
             border-radius: 14px;
             border: 1px solid var(--border-color);
@@ -843,15 +845,6 @@
             flex-shrink: 0;
         }
 
-        .form-scroll {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            padding-right: 5px;
-            padding-bottom: 20px;
-            margin-top: 10px;
-        }
-
         .file-upload-wrapper {
             position: relative;
             width: 80%;
@@ -859,7 +852,7 @@
             margin: 0 auto;
             border: 2px dashed var(--border-color);
             border-radius: 18px;
-            background: #f8fafc;
+            background: var(--bg-hover);
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -877,7 +870,7 @@
 
         .btn-upload-action {
             background: var(--primary);
-            color: white;
+            color: var(--bg-card);
             border: none;
             padding: 50px;
             text-align: center;
@@ -900,14 +893,6 @@
             gap: 12px;
         }
 
-        .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
         #previewImg {
             position: absolute;
             width: 100%;
@@ -924,7 +909,7 @@
         }
 
         .admin-input-group {
-            background: #f8fafc;
+            background: var(--bg-hover);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 10px 14px;
@@ -950,17 +935,6 @@
             outline: none;
             width: 100%;
             padding: 0;
-        }
-
-        .check-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 16px;
         }
 
         .switch {
@@ -995,7 +969,7 @@
             width: 18px;
             left: 3px;
             bottom: 3px;
-            background-color: white;
+            background-color: var(--bg-card);
             transition: .4s;
             border-radius: 50%;
         }
@@ -1006,14 +980,6 @@
 
         input:checked+.slider:before {
             transform: translateX(20px);
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-            padding-top: 10px;
-            border-top: 1px dashed var(--border-color);
         }
 
         .btn-submit,
@@ -1035,7 +1001,7 @@
 
         .btn-submit {
             background: var(--primary);
-            color: white;
+            color: var(--bg-card);
             border: none;
             width: 100%;
             text-transform: uppercase;
@@ -1044,18 +1010,17 @@
 
         .btn-whatsapp {
             background: #25D366;
-            color: white;
+            color: var(--bg-card);
             border: none;
             width: 100%;
             text-transform: uppercase;
         }
 
         .btn-delete {
-            background: #fee2e2;
+            background: var(--danger-light);
             color: var(--danger);
             border: none;
             display: none;
-            flex: 1;
         }
 
         .btn-cancel {
@@ -1081,9 +1046,9 @@
             height: 180px;
             border-radius: 16px;
             padding: 10px;
-            background: white;
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(var(--text-dark-rgb), 0.05);
             margin-bottom: 20px;
         }
 
@@ -1097,13 +1062,14 @@
             font-size: 20px;
             margin-bottom: 10px;
             outline: none;
+            background-color: var(--bg-card);
         }
 
         .wa-select {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background: #ffffff;
+            background-color: var(--bg-card);
             font-weight: 600;
             color: var(--primary);
             cursor: pointer;
@@ -1147,6 +1113,148 @@
             margin-top: 20px;
             border-top: 0.5px solid var(--text-muted);
         }
+
+        /* === CLASES DE UTILIDAD (Reemplazo de estilos en línea) === */
+        .hidden-input { display: none; }
+        .flex-1 { flex: 1; }
+        .font-bold { font-weight: 800; }
+        .text-primary { color: var(--primary); }
+        .text-danger { color: var(--danger); }
+        .text-normal { text-transform: none; }
+        .text-pre-wrap { white-space: pre-wrap; }
+        .text-promo { color: var(--promo-color); }
+        
+        /* Modales */
+        .modal-border-primary { border-top: 5px solid var(--primary); }
+        .modal-border-accent { border-top: 5px solid var(--accent); }
+        .modal-border-success { border-top: 5px solid #25D366; }
+        .modal-border-promo { border-top: 5px solid var(--promo-color); }
+        .modal-auto { height: auto; border-top: none; }
+        .modal-90vh { height: 90vh; }
+        .scroll-container { flex-grow: 1; overflow-y: auto; padding-right: 5px; min-height: 0; }
+        
+        /* Contenedores de botones y acciones */
+        .action-container { height: 40px; flex-shrink: 0; }
+        .form-btn-row { display: flex; gap: 10px; width: 100%; margin-bottom: 24px; padding-bottom: 24px; }
+        .btn-danger-bg { background: var(--danger); }
+        .upload-label { display: flex; justify-content: center; align-items: center; box-sizing: border-box; cursor: pointer; }
+        
+        /* Formularios y Alertas */
+        .error-msg { display: none; color: var(--danger); font-size: 12px; margin-bottom: 12px; font-weight: 600; }
+        .select-compact { padding: 0; height: 20px; }
+        .textarea-auto { resize: none; overflow-y: hidden; }
+        .check-group { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .check-group-accent { background: var(--accent-light); padding: 8px 14px; border: none; border-radius: 14px; margin-bottom: 0; }
+        .check-group-label { font-weight: 800; color: var(--accent); font-size: 14px; margin: 0; }
+        .alert-title { color: var(--primary); margin-bottom: 10px; }
+        .alert-title.danger { color: var(--danger); }
+        .alert-msg { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+        .qr-desc { color: var(--text-muted); font-size: 14px; margin-top: 5px; font-weight: 600; }
+        
+        /* Tarjeta Promo y Footer */
+        .badge-promo { position: static; background: var(--promo-color); width: 95%; letter-spacing: 1px; }
+        .promo-subtitle { font-size: 16px; color: var(--primary); font-weight: 700; margin: 16px 0; }
+        .promo-footer { margin-top: auto; padding-top: 20px; border-top: 1px dashed var(--border-color); text-align: center; }
+        .promo-footer-text { font-size: 16px; color: var(--promo-color); font-weight: 600; margin-bottom: 12px; line-height: 1.2; }
+        .btn-promo { background: var(--promo-color); }
+        .footer-link { color: var(--promo-color); cursor: pointer; letter-spacing: 1px; }
+
+        /* Componentes del Admin (Categorías y Ajustes) */
+        .section-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
+        .section-group { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; margin-bottom: 24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 24px; }
+        .section-group.cols-2 { grid-template-columns: 1fr 1fr; }
+        .btn-action-sm { margin: 0; font-size: 14px; height: 40px; padding: 0; display: flex; justify-content: center; align-items: center; }
+        .btn-action-sm.btn-accent { background: var(--accent); letter-spacing: 1px; }
+        .input-action-sm { margin: 0; width: 100%; text-align: left; padding: 0 15px; font-size: 14px; height: 40px; }
+        
+        .add-cat-row { display: flex; gap: 10px; margin-bottom: 20px; }
+        .add-cat-input { margin: 0; flex-grow: 1; font-size: 16px; padding: 0; }
+        .btn-add-cat { border-radius: 12px; height: 40px; width: 45px; flex-shrink: 0; font-size: 32px; font-weight: 400; line-height: 1; padding-bottom: 2px; }
+        
+        .cat-list { display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px; }
+        .cat-list-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); padding: 10px 15px; border-radius: 14px; }
+        .cat-list-name { font-weight: 600; color: var(--primary); }
+        .cat-list-actions { display: flex; gap: 10px; }
+        .btn-text-edit { background: none; border: none; color: var(--primary); font-weight: 700; cursor: pointer; font-size: 12px; }
+        .btn-text-delete { background: none; border: none; color: var(--danger); font-weight: 700; cursor: pointer; font-size: 12px; }
+        .admin-info-box { text-align: left; background: var(--bg-hover); border: 1px solid var(--border-color); margin-bottom: 20px; }
+
+        /* Empty States y Dinámicos del JS */
+        .empty-state { grid-column: span 2; text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; }
+        .empty-state.large { padding: 50px 20px; }
+        .empty-icon { font-size: 48px; margin-bottom: 15px; }
+        .empty-icon.small { font-size: 40px; }
+        .empty-title { color: var(--primary); margin-bottom: 8px; }
+        .empty-desc { font-size: 14px; font-weight: 500; }
+        
+        .btn-checkout-list { height: 40px; border-radius: 14px; }
+
+        /* Selector de cantidad dinámico para el modal de descripción del producto */
+        .stepper-list { 
+            display: flex; 
+            height: 100%; 
+            width: 100%; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px; 
+            border-radius: 14px; 
+            background-color: var(--primary); 
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.15);
+        }
+        .stepper-list button { 
+            background: transparent;
+            color: var(--bg-card);
+            border: none;
+            width: 44px;
+            height: 100%;
+            font-size: 26px; 
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .stepper-list span { 
+            font-size: 15px; 
+            font-weight: 700; 
+            color: var(--bg-card);
+            text-align: center;
+        }
+
+        /* Estilo para el selector de cantidad refinado del carrito */
+        .ticket-stepper {
+            display: flex;
+            width: 25%;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+        }
+        .ticket-stepper button {
+            background: transparent;
+            color: var(--bg-card);
+            border: none;
+            width: 24px;
+            height: 100%;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ticket-stepper span {
+            color: var(--bg-card);
+            font-weight: 700;
+            font-size: 13px;
+            min-width: 15px;
+            text-align: center;
+        }
+
+        /* Botón de vista previa */
+        .preview-badge { display: none; position: fixed; bottom: 120px; right: 20px; width: 36px; height: 36px; border-radius: 50%; z-index: 1010; background: var(--primary); color: var(--bg-card); border: none; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(var(--text-dark-rgb), 0.3); cursor: pointer; transition: transform 0.2s; }
     </style>
 
     <link rel="manifest" href="manifest.json">
@@ -1175,7 +1283,6 @@
                 <p id="headerSubtitle">Chaquetas y Suéteres escolares</p>
             </div>
 
-            <!-- CONTROLES SUPERIORES -->
             <div class="top-controls">
                 <button class="btn-header-icon" onclick="openShareModal()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -1188,7 +1295,7 @@
                     </svg>
                 </button>
             </div>
-        </div> <!-- ESTE ES EL DIV FALTANTE QUE SE DEBE AGREGAR -->
+        </div> 
 
         <div class="nav-row" id="navNormal">
             <button class="search-trigger-btn" onclick="toggleSearch(true)">
@@ -1197,7 +1304,6 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </button>
-
             <div class="categories" id="categoryContainer"></div>
         </div>
 
@@ -1216,8 +1322,7 @@
     </header>
 
     <div class="product-grid" id="productGrid">
-        <div style="grid-column: span 2; text-align:center; padding: 40px; color:var(--text-muted); font-weight:600;">
-            Cargando catálogo...</div>
+        <div class="empty-state">Cargando catálogo...</div>
     </div>
 
     <!-- ELEMENTOS DEL CLIENTE (CARRITO) -->
@@ -1229,31 +1334,19 @@
         </button>
     </div>
 
-    <!-- BOTONES FLOTANTES EXCLUSIVOS ADMIN AHORA -->
+    <!-- BOTONES FLOTANTES EXCLUSIVOS ADMIN -->
     <div class="fab-container ocultar-en-cliente">
-        <!-- Botón Ajustes del Catálogo -->
         <button id="btnSettings" class="fab fab-visibility" onclick="openCategoryManager()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path
-                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
-                </path>
-            </svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
-        <!-- Botón Agregar -->
         <button class="fab fab-add" onclick="openFormModal(null)">+</button>
     </div>
 
     <!-- MODALES DE DETALLE Y CARRITO -->
     <div class="modal-overlay ocultar-en-admin" id="detailModal">
-        <div class="modal-content" style="border-top: 5px solid var(--primary);">
+        <div class="modal-content modal-border-primary">
             <button class="close-btn" onclick="closeDetailModal()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="detail-scroll-area">
                 <img id="detailImg" class="detail-img" src="">
@@ -1261,29 +1354,22 @@
                 <div class="detail-price" id="detailPrice">0,00</div>
                 <p id="detailDesc" class="detail-desc"></p>
             </div>
-            <div id="detailActionContainer" style="height: 50px; flex-shrink: 0;"></div>
+            <div id="detailActionContainer" class="action-container"></div>
         </div>
     </div>
 
     <div class="modal-overlay ocultar-en-admin" id="cartModal">
-        <div class="modal-content" style="border-top: 5px solid var(--accent);">
+        <div class="modal-content modal-border-accent">
             <button class="close-btn" onclick="closeCartModal()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="modal-header-top">
                 <h2>Presupuesto</h2>
-                <button class="btn-empty-cart"
-                    onclick="document.getElementById('confirmResetModal').classList.add('show')">Limpiar</button>
+                <button class="btn-empty-cart" onclick="document.getElementById('confirmResetModal').classList.add('show')">Limpiar</button>
             </div>
             <div class="customer-form-top">
                 <input type="text" id="customerName" placeholder="Tu nombre y apellido..." autocomplete="off">
-                <div id="nameError"
-                    style="display:none; color:var(--danger); font-size:12px; margin-bottom:12px; font-weight:600;">⚠
-                    Por favor, ingresa tus datos.</div>
+                <div id="nameError" class="error-msg">⚠ Por favor, ingresa tus datos.</div>
             </div>
             <div class="ticket-list" id="ticketList"></div>
             <div class="ticket-total">
@@ -1291,10 +1377,7 @@
                 <span id="ticketTotalAmount">0,00</span>
             </div>
             <button class="btn-whatsapp" onclick="sendWhatsAppClient()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" /></svg>
                 Enviar y presupuestar
             </button>
         </div>
@@ -1302,13 +1385,9 @@
 
     <!-- FORMULARIO ADMIN Y MODAL COMPARTIR -->
     <div class="modal-overlay ocultar-en-cliente" id="formModal">
-        <div class="modal-content">
+        <div class="modal-content modal-border-primary">
             <button class="close-btn" onclick="closeFormModal()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div class="form-scroll">
                 <form id="productForm">
@@ -1318,318 +1397,210 @@
                     <div class="file-upload-wrapper">
                         <img id="previewImg" src="" title="Tocar para cambiar">
                         <div id="uploadText" class="upload-btns-container">
-                            <label for="prodImgGal" class="btn-upload-action gal"
-                                style="display: flex; justify-content: center; align-items: center; box-sizing: border-box; cursor: pointer;">🖼️<br>GALERÍA</label>
+                            <label for="prodImgGal" class="btn-upload-action gal upload-label">🖼️<br>GALERÍA</label>
                         </div>
-                        <input type="file" id="prodImgCam" accept="image/*" capture="environment" style="display:none;">
-                        <input type="file" id="prodImgGal" accept="image/*" style="display:none;">
+                        <input type="file" id="prodImgCam" accept="image/*" capture="environment" class="hidden-input">
+                        <input type="file" id="prodImgGal" accept="image/*" class="hidden-input">
                     </div>
 
                     <div class="admin-input-group">
                         <label>Nombre del producto</label>
-                        <input type="text" id="prodName" class="admin-field" placeholder="Nombre del producto..."
-                            required>
+                        <input type="text" id="prodName" class="admin-field" placeholder="Nombre del producto..." required>
                     </div>
 
                     <div class="admin-row">
                         <div class="admin-input-group">
                             <label>Precio</label>
-                            <input type="text" id="prodPrice" class="admin-field" placeholder="0,00"
-                                oninput="handlePriceInput(event)" required>
+                            <input type="text" id="prodPrice" class="admin-field" placeholder="0,00" oninput="handlePriceInput(event)" required>
                         </div>
                         <div class="admin-input-group">
                             <label>Categoría</label>
-                            <select id="prodCat" class="admin-field" style="padding:0; height:20px;"></select>
+                            <select id="prodCat" class="admin-field select-compact"></select>
                         </div>
                     </div>
 
                     <div class="admin-input-group">
                         <label>Descripción</label>
-                        <textarea id="prodDesc" class="admin-field" rows="2" style="resize:none; overflow-y:hidden;"
-                            placeholder="Detalles del producto..." required></textarea>
+                        <textarea id="prodDesc" class="admin-field textarea-auto" rows="2" placeholder="Detalles del producto..." required></textarea>
                     </div>
 
-                    <div class="check-group"
-                        style="padding: 8px 14px; background: #fff1f2; border:none; border-radius:14px; margin-bottom:0;">
-                        <label style="font-weight:800; color:var(--accent); font-size: 14px; margin:0;">VISIBLE EN
-                            CATÁLOGO</label>
-                        <label class="switch"><input type="checkbox" id="prodActivo" checked><span
-                                class="slider"></span></label>
+                    <div class="check-group check-group-accent">
+                        <label class="check-group-label">VISIBLE EN CATÁLOGO</label>
+                        <label class="switch"><input type="checkbox" id="prodActivo" checked><span class="slider"></span></label>
                     </div>
                 </form>
             </div>
-            <div style="display: flex; gap: 10px; width: 100%; margin-bottom: 24px; padding-bottom: 24px;">
-                <button type="button" id="btnEliminar" class="btn-delete" style="flex: 1;"
-                    onclick="document.getElementById('deleteModal').classList.add('show')">
-                    Borrar
-                </button>
-
-                <button type="submit" form="productForm" id="btnGuardar" class="btn-submit" style="flex: 1;">
-                    Guardar
-                </button>
+            <div class="form-btn-row">
+                <button type="button" id="btnEliminar" class="btn-delete flex-1" onclick="document.getElementById('deleteModal').classList.add('show')">Borrar</button>
+                <button type="submit" form="productForm" id="btnGuardar" class="btn-submit flex-1">Guardar</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="shareModal">
-        <div class="modal-content" style="border-top: 5px solid #25D366;">
+        <div class="modal-content modal-border-success">
             <button class="close-btn" onclick="document.getElementById('shareModal').classList.remove('show')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <h2 class="titulo-panel">Comparte el Catálogo</h2>
             <div class="qr-container">
                 <img id="qrCode" src="">
-                <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px; font-weight:600;">Muestra este QR
-                    para escanear</p>
+                <p class="qr-desc">Muestra este QR para escanear</p>
             </div>
-            <div style="margin-top:auto;">
-                <input type="tel" id="shareWaNumber" class="wa-input" placeholder="Ej: 04121234567 (Opcional)"
-                    maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                <button class="btn-whatsapp" onclick="shareWhatsApp()"><svg width="20" height="20" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                    </svg>Enviar Link</button>
+            <div>
+                <input type="tel" id="shareWaNumber" class="wa-input" placeholder="Ej: 04121234567 (Opcional)" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <button class="btn-whatsapp" onclick="shareWhatsApp()"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" /></svg>Enviar Link</button>
             </div>
         </div>
     </div>
 
     <!-- Modales de Confirmación y Alertas -->
-    <div class="modal-overlay centered-modal" id="alertModal" style="z-index: 300;">
-        <div class="modal-content confirm-box">
-            <h3 id="alertTitle" style="color: var(--primary); margin-bottom:10px;">Atención</h3>
-            <p id="alertMessage" style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Mensaje</p>
+    <div class="modal-overlay centered-modal" id="alertModal">
+        <div class="modal-content confirm-box modal-auto">
+            <h3 id="alertTitle" class="alert-title">Atención</h3>
+            <p id="alertMessage" class="alert-msg">Mensaje</p>
             <div class="confirm-actions">
-                <button class="btn-submit" style="flex:1;"
-                    onclick="document.getElementById('alertModal').classList.remove('show')">Entendido</button>
+                <button class="btn-submit flex-1" onclick="document.getElementById('alertModal').classList.remove('show')">Entendido</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay centered-modal" id="confirmResetModal">
-        <div class="modal-content confirm-box">
-            <h3>¿Reiniciar Lista?</h3>
-            <p>Se borrarán los modelos seleccionados.</p>
+        <div class="modal-content confirm-box modal-auto">
+            <h3 class="alert-title">¿Reiniciar Lista?</h3>
+            <p class="alert-msg">Se borrarán los modelos seleccionados.</p>
             <div class="confirm-actions">
-                <button class="btn-cancel"
-                    onclick="document.getElementById('confirmResetModal').classList.remove('show')">Cancelar</button>
-                <button class="btn-submit" onclick="executeResetCart()"
-                    style="background:var(--danger)">Confirmar</button>
+                <button class="btn-cancel" onclick="document.getElementById('confirmResetModal').classList.remove('show')">Cancelar</button>
+                <button class="btn-submit btn-danger-bg" onclick="executeResetCart()">Confirmar</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay centered-modal" id="deleteModal">
-        <div class="modal-content confirm-box">
-            <h3>¿Eliminar Producto?</h3>
-            <p>Se borrará permanentemente.</p>
+        <div class="modal-content confirm-box modal-auto">
+            <h3 class="alert-title danger">¿Eliminar Producto?</h3>
+            <p class="alert-msg">Se borrará permanentemente.</p>
             <div class="confirm-actions">
-                <button class="btn-cancel"
-                    onclick="document.getElementById('deleteModal').classList.remove('show')">Cancelar</button>
-                <button class="btn-submit" id="btnConfirmDelete" onclick="executeDelete()"
-                    style="background:var(--danger)">Sí, Eliminar</button>
+                <button class="btn-cancel" onclick="document.getElementById('deleteModal').classList.remove('show')">Cancelar</button>
+                <button class="btn-submit btn-danger-bg" id="btnConfirmDelete" onclick="executeDelete()">Sí, Eliminar</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="promoModal">
-        <div class="modal-content" style="border-top: 5px solid var(--promo-purple);">
+        <div class="modal-content modal-border-promo">
             <div class="brand-header">
-                <div class="badge-hidden"
-                    style="position:static; background:var(--promo-purple); width:95%; letter-spacing: 1px;">
-                    Digit<span style="font-weight: 800;">ALS</span></div>
+                <div class="badge-hidden badge-promo">Digit<span class="font-bold">ALS</span></div>
                 <button class="close-btn" onclick="document.getElementById('promoModal').classList.remove('show')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
             <div class="detail-scroll-area">
                 <h2 class="promo-title" id="dinPromoTitle">Cargando...</h2>
-                <p style="font-size: 16px; color: var(--primary); font-weight: 700; margin: 16px 0;"
-                    id="dinPromoSubtitle"></p>
-                <p class="detail-desc" id="dinPromoDesc" style="white-space: pre-wrap;"></p>
+                <p class="promo-subtitle" id="dinPromoSubtitle"></p>
+                <p class="detail-desc text-pre-wrap" id="dinPromoDesc"></p>
             </div>
-
-            <!-- CONTENEDOR DEL BOTÓN CON EL TEXTO OFRECIENDO EL CATÁLOGO -->
-            <div
-                style="margin-top: auto; padding-top: 20px; border-top: 1px dashed var(--border-color); text-align: center;">
-                <p
-                    style="font-size: 13px; color: var(--promo-purple); font-weight: 600; margin-bottom: 12px; line-height: 1.2;">
-                    ¿Necesitas un catálogo<br>para tu emprendimiento?
-                </p>
-                <button class="btn-submit" id="dinPromoBtn" style="background:var(--promo-purple);"
-                    onclick="ejecutarPromoAccion()">
-                    Cargando...
-                </button>
+            <div class="promo-footer">
+                <p class="promo-footer-text">- Pide tu Catálogo Digital YA -</p>
+                <button class="btn-submit btn-promo" id="dinPromoBtn" onclick="ejecutarPromoAccion()">Cargando...</button>
             </div>
         </div>
     </div>
 
     <!-- === GESTOR DE CATEGORÍAS Y AJUSTES === -->
     <div class="modal-overlay ocultar-en-cliente" id="categoryManagerModal">
-        <div class="modal-content" style="border-top: 5px solid var(--primary); height: 90vh;">
-            <button class="close-btn"
-                onclick="document.getElementById('categoryManagerModal').classList.remove('show')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+        <div class="modal-content modal-border-primary modal-90vh">
+            <button class="close-btn" onclick="document.getElementById('categoryManagerModal').classList.remove('show')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <h2 class="titulo-panel">Ajustes del Catálogo</h2>
+            <div class="scroll-container">
 
-            <!-- CONTENEDOR CON SCROLL INTERNO PARA TODO EL CONTENIDO -->
-            <div class="detail-scroll-area" style="flex-grow: 1; overflow-y: auto; padding-right: 5px; min-height: 0;">
-
-                <!-- 1. SECCIÓN VISTA PREVIA (AHORA ARRIBA DE PRIMERO) -->
-                <label
-                    style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block; letter-spacing:0.5px;">
-                    Vista del catálogo
-                </label>
-                <div
-                    style="display:grid; grid-template-columns: 1fr; gap:10px; width: 100%; margin-bottom:24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 24px;">
-                    <button class="btn-submit"
-                        style="background: var(--accent); margin: 0; font-size: 14px; height: 40px; letter-spacing:1px;"
-                        onclick="document.getElementById('categoryManagerModal').classList.remove('show'); toggleClientAdminView();">
-                        Ver como Cliente
-                    </button>
+                <label class="section-label">Vista del catálogo</label>
+                <div class="section-group">
+                    <button class="btn-submit btn-action-sm btn-accent" onclick="document.getElementById('categoryManagerModal').classList.remove('show'); toggleClientAdminView();">Ver como Cliente</button>
                 </div>
 
-                <!-- 2. SECCIÓN: VISIBILIDAD DE PRODUCTOS EN EL PANEL -->
-                <label
-                    style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block; letter-spacing:0.5px;">
-                    Visibilidad en tu panel
-                </label>
-                <div
-                    style="display:grid; grid-template-columns: 1fr; gap:10px; width: 100%; margin-bottom:24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 24px;">
-                    <select id="visibilityInput" class="wa-input wa-select"
-                        style="margin: 0; width: 100%; text-align: left; padding: 0 15px; font-size: 14px; height: 40px;"
-                        onchange="changeAdminVisibilityFilter(this.value)">
+                <label class="section-label">Visibilidad en tu panel</label>
+                <div class="section-group">
+                    <select id="visibilityInput" class="wa-input wa-select input-action-sm" onchange="changeAdminVisibilityFilter(this.value)">
                         <option value="0">Mostrar AMBOS (Visibles y Ocultos)</option>
                         <option value="1">Mostrar solo VISIBLES</option>
                         <option value="2">Mostrar solo OCULTOS</option>
                     </select>
                 </div>
 
-                <!-- 3. SECCIÓN MONEDA -->
-                <label
-                    style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block; letter-spacing:0.5px;">
-                    Moneda global
-                </label>
-                <div
-                    style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; width: 100%; margin-bottom:24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 24px;">
-                    <select id="currencyInput" class="wa-input wa-select"
-                        style="margin: 0; width: 100%; text-align: left; padding: 0 15px; font-size: 14px; height: 40px;">
+                <label class="section-label">Moneda global</label>
+                <div class="section-group cols-2">
+                    <select id="currencyInput" class="wa-input wa-select input-action-sm">
                         <option value="$">Dólares ($)</option>
                         <option value="Bs.">Bolívares (Bs.)</option>
                     </select>
-                    <button id="btnSaveCurrency" class="btn-submit"
-                        style="margin: 0; width: 100%; padding: 0; font-size: 14px; height: 40px; cursor: pointer;"
-                        onclick="saveCurrency()">
-                        Guardar
-                    </button>
+                    <button id="btnSaveCurrency" class="btn-submit btn-action-sm" onclick="saveCurrency()">Guardar</button>
                 </div>
 
-                <!-- 4. SECCIÓN CATEGORÍAS -->
-                <label
-                    style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block; letter-spacing:0.5px;">
-                    Gestionar Categorías
-                </label>
-                <div style="display:flex; gap:10px; margin-bottom:20px;">
-                    <input type="text" id="newCatName" class="wa-input"
-                        style="margin:0; flex-grow:1; font-size: 16px; padding: 0;" placeholder="Nueva categoría...">
-                    <button class="btn-add"
-                        style="border-radius:12px; height:40px; width:45px; flex-shrink:0; font-size:32px; font-weight:400; line-height: 1; padding-bottom: 2px;"
-                        onclick="addCategory()">+</button>
+                <label class="section-label">Gestionar Categorías</label>
+                <div class="add-cat-row">
+                    <input type="text" id="newCatName" class="wa-input add-cat-input" placeholder="Nueva categoría...">
+                    <button class="btn-add btn-add-cat" onclick="addCategory()">+</button>
                 </div>
-                <div id="categoryManagerList"
-                    style="display:flex; flex-direction:column; gap:10px; padding-bottom: 20px;">
-                </div>
+                <div id="categoryManagerList" class="cat-list"></div>
 
             </div>
         </div>
     </div>
 
     <div class="modal-overlay centered-modal ocultar-en-cliente" id="editCategoryModal">
-        <div class="modal-content confirm-box" style="height: auto; border-top: none;">
-            <h3 style="margin-bottom: 15px;">Editar Categoría</h3>
-            <div class="admin-input-group"
-                style="text-align: left; background: #f8fafc; border: 1px solid var(--border-color); margin-bottom: 20px;">
-                <label>Nombre Actual: <span id="labelOldCat"
-                        style="color: var(--primary); text-transform: none;"></span></label>
+        <div class="modal-content confirm-box modal-auto">
+            <h3 class="alert-title">Editar Categoría</h3>
+            <div class="admin-input-group admin-info-box">
+                <label>Nombre Actual: <span id="labelOldCat" class="text-primary text-normal"></span></label>
                 <input type="text" id="editCatInput" class="admin-field" placeholder="Escribe el nuevo nombre...">
                 <input type="hidden" id="oldCatNameHolder">
             </div>
             <div class="confirm-actions">
-                <button class="btn-cancel"
-                    onclick="document.getElementById('editCategoryModal').classList.remove('show')">Cancelar</button>
+                <button class="btn-cancel" onclick="document.getElementById('editCategoryModal').classList.remove('show')">Cancelar</button>
                 <button class="btn-submit" onclick="executeEditCategory()">Guardar</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay centered-modal ocultar-en-cliente" id="confirmDeleteCategoryModal">
-        <div class="modal-content confirm-box" style="height: auto; border-top: none;">
-            <h3 style="color: var(--danger); margin-bottom: 10px;">¿Eliminar Categoría?</h3>
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
-                La categoría <span id="labelDelCat" style="font-weight: 800; color: var(--primary);"></span> se borrará
-                permanentemente.
-            </p>
+        <div class="modal-content confirm-box modal-auto">
+            <h3 class="alert-title danger">¿Eliminar Categoría?</h3>
+            <p class="alert-msg">La categoría <span id="labelDelCat" class="font-bold text-primary"></span> se borrará permanentemente.</p>
             <input type="hidden" id="delCatNameHolder">
             <div class="confirm-actions">
-                <button class="btn-cancel"
-                    onclick="document.getElementById('confirmDeleteCategoryModal').classList.remove('show')">Cancelar</button>
-                <button class="btn-submit" style="background: var(--danger);" onclick="executeDeleteCategory()">Sí,
-                    Eliminar</button>
+                <button class="btn-cancel" onclick="document.getElementById('confirmDeleteCategoryModal').classList.remove('show')">Cancelar</button>
+                <button class="btn-submit btn-danger-bg" onclick="executeDeleteCategory()">Sí, Eliminar</button>
             </div>
         </div>
     </div>
 
-    <!-- Botón flotante circular de retorno (Solo visible en Vista Previa de Cliente) -->
-    <button id="previewBadge"
-        style="display: none; position: fixed; bottom: 120px; right: 20px; width: 36px; height: 36px; border-radius: 50%; z-index: 1010; background: var(--primary); color: white; border: none; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s;"
-        onclick="toggleClientAdminView()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
+    <button id="previewBadge" class="preview-badge" onclick="toggleClientAdminView()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
     </button>
 
     <!-- Modal Personalizado para Instalar PWA -->
     <div class="modal-overlay centered-modal" id="installModal" style="z-index: 400;">
-        <div class="modal-content confirm-box">
-            <div style="font-size: 40px; margin-bottom: 10px;">📲</div>
-            <h3 style="color: var(--primary); margin-bottom:10px;">¡Lleva el Catálogo contigo!</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
-                Instala nuestra App en tu pantalla de inicio para acceder al instante, comprar más rápido y no perder
-                nuestro enlace.
-            </p>
+        <div class="modal-content confirm-box modal-auto">
+            <div class="empty-icon small">📲</div>
+            <h3 class="alert-title">¡Lleva el Catálogo contigo!</h3>
+            <p class="alert-msg">Instala nuestra App en tu pantalla de inicio para acceder al instante, comprar más rápido y no perder nuestro enlace.</p>
             <div class="confirm-actions">
-                <button class="btn-cancel"
-                    onclick="document.getElementById('installModal').classList.remove('show')">Quizás después</button>
-                <button class="btn-submit" id="btnInstallConfirm">Instalar<br>App</button>
+                <button class="btn-cancel" onclick="document.getElementById('installModal').classList.remove('show')">Quizás después</button>
+                <button class="btn-submit" id="btnInstallConfirm">Instalar App</button>
             </div>
         </div>
     </div>
 
-    <footer>Catálogo Web creado por <span onclick="document.getElementById('promoModal').classList.add('show')"
-            style="color: var(--promo-purple); cursor:pointer; letter-spacing: 1px;">
-            Digit<span style="color: var(--promo-purple); font-weight: 800;">ALS</span></span> | © 2026</footer>
+    <footer>Catálogo Web creado por <span onclick="document.getElementById('promoModal').classList.add('show')" class="footer-link">Digit<span class="font-bold text-promo">ALS</span></span> | © 2026</footer>
 
     <!-- === LÓGICA MAESTRA === -->
     <script>
         // 1. TUS CREDENCIALES
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyU2rYvLm_xhta_k-rXfJ-22l8tE4yKVgStBWguYFxDjG5MPY1yGKXB5eLjdsWIAGw/exec";
 
-        // Auto-crecimiento dinámico para la descripción del producto
         document.addEventListener("DOMContentLoaded", () => {
             const prodDescTx = document.getElementById('prodDesc');
             if (prodDescTx) {
@@ -1645,10 +1616,8 @@
         let SHOP_ID = _urlParams.get('shop');
 
         if (SHOP_ID) {
-            // Si el ID viene en la URL, lo guardamos en la memoria del dispositivo
             localStorage.setItem('tienda_guardada', SHOP_ID);
         } else {
-            // Si no viene en la URL (porque abrió la App instalada), lo recuperamos
             SHOP_ID = localStorage.getItem('tienda_guardada');
         }
 
@@ -1678,7 +1647,6 @@
             document.body.classList.add('modo-admin');
             document.getElementById('headerSubtitle').innerText = "PANEL DE ADMINISTRACIÓN";
 
-            // Muestra el botón de alternar vista únicamente al administrador
             const btnToggle = document.getElementById('btnToggleMode');
             if (btnToggle) btnToggle.style.display = "flex";
         }
@@ -1686,13 +1654,6 @@
         // 4. VARIABLES GLOBALES Y UTILIDADES
         let products = [], categories = [];
         let currentCategory = 'todas', currentDetailId = null, visibilityState = 0;
-        let todosClickCount = 0, todosClickTimer = null;
-
-        const visConfigs = [
-            { id: 'todos', label: 'AMBOS', color: 'var(--primary)', bg: '#f1f5f9', icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>' },
-            { id: 'visibles', label: 'VISIBLES', color: 'var(--success)', bg: '#ecfdf5', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>' },
-            { id: 'ocultos', label: 'OCULTOS', color: 'var(--text-muted)', bg: '#f8fafc', icon: '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>' }
-        ];
 
         function formatPrice(num) { return num.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
         function showAlert(title, message) { document.getElementById('alertTitle').innerText = title; document.getElementById('alertMessage').innerText = message; document.getElementById('alertModal').classList.add('show'); }
@@ -1706,7 +1667,6 @@
             window.open(url, '_blank');
         }
 
-        // --- CARGA DE PRODUCTOS Y MONEDA DESDE GOOGLE SHEETS ---
         async function loadProducts() {
             try {
                 const url = SHOP_ID ? `${SCRIPT_URL}?shop=${SHOP_ID}` : SCRIPT_URL;
@@ -1714,22 +1674,17 @@
                 const data = await response.json();
 
                 MONEDA = data.moneda || "$";
-                // Limpiamos el número de cualquier espacio, símbolo raro que haya puesto en Sheets.
                 WHATSAPP_EMPRENDEDOR = data.whatsapp ? data.whatsapp.toString().replace(/[^0-9]/g, '') : "";
                 IMGBB_KEY = data.imgbb_key || data.imgbb || "";
 
-                // Validación más fuerte: atrapa diferencias de mayúsculas/minúsculas y evita celdas con espacios vacíos
                 const placeholderSheet = data.placeholder || data.texto_placeholder || data.Placeholder;
                 TEXTO_PLACEHOLDER = (placeholderSheet && placeholderSheet.toString().trim() !== "")
                     ? placeholderSheet.toString().trim()
                     : "Tu nombre y apellido...";
 
-                //TEXTO_MENSAJE = data.mensaje || "Hola, mi nombre es *{nombre}*.\nMe interesa el siguiente pedido:\n\n";
-
                 const rawMensaje = data.mensaje || "Hola, mi nombre es *{nombre}*.\nMe interesa el siguiente pedido:\n\n";
                 TEXTO_MENSAJE = rawMensaje.replace(/\\n/g, '\n');
 
-                // Cargar datos de la promoción desde GSheets
                 if (data.promo) {
                     PROMO_ACTIVO = true;
                     PROMO_CARD_TITULO = data.promo.card_titulo || "INFO";
@@ -1741,23 +1696,18 @@
                     PROMO_BOTON = data.promo.boton || "Ver detalles";
                     PROMO_LINK = data.promo.link || "";
 
-                    // Inyectar datos en el modal
                     document.getElementById('dinPromoTitle').innerHTML = PROMO_MODAL_TITULO;
                     document.getElementById('dinPromoSubtitle').innerText = PROMO_MODAL_SUBTITULO;
                     document.getElementById('dinPromoDesc').innerText = PROMO_MODAL_DESC;
                     document.getElementById('dinPromoBtn').innerHTML = PROMO_BOTON;
                 } else {
-                    // Si no hay ninguna promo con "SÍ" en Google Sheets, se apaga la tarjeta por completo
                     PROMO_ACTIVO = false;
-
-                    //PROMO_LINK = 'https://wa.me/584142711341?text=Hola,%20me%20gustaría%20solicitar%20información%20para%20crear%20un%20catálogo%20web.';
                 }
 
-                // Actualizar el placeholder de forma segura en el DOM
                 const nameInput = document.getElementById('customerName');
                 if (nameInput) {
                     nameInput.placeholder = TEXTO_PLACEHOLDER;
-                    nameInput.setAttribute("placeholder", TEXTO_PLACEHOLDER); // Fuerza el cambio visual en todos los navegadores
+                    nameInput.setAttribute("placeholder", TEXTO_PLACEHOLDER);
                 }
 
                 if (data.nombre_tienda) {
@@ -1778,11 +1728,10 @@
                 updateCartBar();
 
             } catch (error) {
-                document.getElementById('productGrid').innerHTML = `<div style="grid-column: span 2; text-align:center; padding: 40px; color:var(--danger); font-weight:600;">Error de conexión.</div>`;
+                document.getElementById('productGrid').innerHTML = `<div class="empty-state">Error de conexión.</div>`;
             }
         }
 
-        // --- GUARDADO DE MONEDA EN GOOGLE SHEETS ---
         async function saveCurrency() {
             const newVal = document.getElementById('currencyInput').value.trim() || "$";
             const btn = document.getElementById('btnSaveCurrency');
@@ -1809,7 +1758,7 @@
                 btn.innerText = "Error";
             } finally {
                 setTimeout(() => {
-                    btn.style.backgroundColor = 'var(--primary)';
+                    btn.style.backgroundColor = 'var(--accent)';
                     btn.innerText = "Guardar";
                     btn.disabled = false;
                 }, 2000);
@@ -1823,26 +1772,19 @@
             renderProducts();
         }
 
-        // --- RENDERIZADO SIMÉTRICO DE TARJETAS ---
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = "";
             const searchVal = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : "";
-
-            // Determina la visualización en base a la clase actual del body
             const isVisualizingAsAdmin = document.body.classList.contains('modo-admin');
 
             const filtered = products.filter(p => {
                 const matchCat = (currentCategory === 'todas' || p.cat === currentCategory);
-
-                // Filtro de búsqueda por texto (Se conserva y aplica para ambos modos)
                 const matchSearch = p.name.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
 
                 if (!isVisualizingAsAdmin) {
-                    // Filtros exclusivos del cliente (oculta productos inactivos)
                     return p.available && matchCat && matchSearch;
                 } else {
-                    // Filtros exclusivos de administración (muestra visibles/ocultos según el FAB selector)
                     let matchVis = true;
                     if (visibilityState === 1) matchVis = (p.available === true);
                     if (visibilityState === 2) matchVis = (p.available === false);
@@ -1854,9 +1796,9 @@
             if (PROMO_ACTIVO) {
                 tarjetaPublicidad = `
                     <div class="card ad-card ocultar-en-admin" onclick="document.getElementById('promoModal').classList.add('show')">
-                        <div class="ad-card-image" style="margin-right: -10px; font-size: 14px;">${PROMO_CARD_TITULO}</div>
+                        <div class="ad-card-image">${PROMO_CARD_TITULO}</div>
                         <div class="ad-title">${PROMO_CARD_SUBTITULO}</div>
-                        <div class="ad-desc" style="-webkit-line-clamp: 3;">${PROMO_CARD_DESC}</div>
+                        <div class="ad-desc">${PROMO_CARD_DESC}</div>
                         <div class="ad-action">Ver más <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
                     </div>
                 `;
@@ -1864,29 +1806,14 @@
 
             if (filtered.length === 0) {
                 if (isVisualizingAsAdmin) {
-                    grid.innerHTML = `<div style="grid-column: span 2; text-align:center; padding: 40px; color:var(--text-muted); font-weight:600;">No hay productos.</div>`;
+                    grid.innerHTML = `<div class="empty-state">No hay productos.</div>`;
                 } else {
                     let mensajeVacio = "";
-                    // Verificamos si el catálogo está totalmente vacío (0 productos activos)
                     if (products.filter(p => p.available).length === 0) {
-                        mensajeVacio = `
-                            <div style="grid-column: span 2; text-align:center; padding: 50px 20px; color:var(--text-muted);">
-                                <div style="font-size: 48px; margin-bottom: 15px;">🛍️</div>
-                                <h3 style="color: var(--primary); margin-bottom: 8px;">Catálogo en preparación</h3>
-                                <p style="font-size: 14px; font-weight: 500;">Aún no hemos publicado nuestros productos. ¡Vuelve muy pronto!</p>
-                            </div>
-                        `;
+                        mensajeVacio = `<div class="empty-state large"><div class="empty-icon">🛍️</div><h3 class="empty-title">Catálogo en preparación</h3><p class="empty-desc">Aún no hemos publicado nuestros productos. ¡Vuelve muy pronto!</p></div>`;
                     } else {
-                        // Sí hay productos, pero la búsqueda o filtro actual no encontró nada
-                        mensajeVacio = `
-                            <div style="grid-column: span 2; text-align:center; padding: 50px 20px; color:var(--text-muted);">
-                                <div style="font-size: 40px; margin-bottom: 15px;">🔍</div>
-                                <h3 style="color: var(--primary); margin-bottom: 8px;">Sin resultados</h3>
-                                <p style="font-size: 14px; font-weight: 500;">No encontramos ningún modelo con esa descripción.</p>
-                            </div>
-                        `;
+                        mensajeVacio = `<div class="empty-state large"><div class="empty-icon small">🔍</div><h3 class="empty-title">Sin resultados</h3><p class="empty-desc">No encontramos ningún modelo con esa descripción.</p></div>`;
                     }
-                    // Mostramos el mensaje, y debajo la publicidad (si la hay)
                     grid.innerHTML = mensajeVacio + tarjetaPublicidad;
                 }
                 return;
@@ -1897,7 +1824,6 @@
                 if (!isVisualizingAsAdmin && index === 2) grid.innerHTML += tarjetaPublicidad;
 
                 if (isVisualizingAsAdmin) {
-                    // Tarjeta de Edición (Administrador)
                     const hiddenClass = !p.available ? "hidden-prod" : "";
                     const badge = !p.available ? `<div class="badge-hidden">Oculto</div>` : "";
                     grid.innerHTML += `
@@ -1915,7 +1841,6 @@
                         </div>
                     `;
                 } else {
-                    // Tarjeta de Compra (Cliente)
                     const showAddBtn = p.qty === 0 ? "flex" : "none";
                     const showStepper = p.qty > 0 ? "flex" : "none";
                     const isSelected = p.qty > 0 ? "selected" : "";
@@ -1940,34 +1865,9 @@
                 }
             });
 
-            // Agregamos la línea que insertaba la tarjeta al final y la llave de cierre
             if (!isVisualizingAsAdmin && filtered.length < 3 && PROMO_ACTIVO) grid.innerHTML += tarjetaPublicidad;
         }
 
-        function ejecutarPromoAccion() {
-            if (!PROMO_LINK) {
-                console.log("No hay link configurado");
-                return;
-            }
-
-            let linkLimpio = PROMO_LINK.trim();
-
-            if (linkLimpio.startsWith('http')) {
-                // TRUCO: Si detecta que es un link de WhatsApp, agarra el texto, 
-                // le pone los %20 y lo arregla automáticamente por detrás.
-                if (linkLimpio.includes('wa.me') && linkLimpio.includes('text=')) {
-                    let partes = linkLimpio.split('text=');
-                    // partes[0] es la URL con el número, partes[1] es tu texto humano
-                    linkLimpio = partes[0] + 'text=' + encodeURIComponent(partes[1]);
-                }
-
-                window.open(linkLimpio, '_blank');
-            } else {
-                openWhatsApp(WHATSAPP_EMPRENDEDOR, linkLimpio);
-            }
-        }
-
-        // --- ADMINISTRADOR (Visibility y Formulario) ---
         function changeAdminVisibilityFilter(val) {
             visibilityState = parseInt(val) || 0;
             renderProducts();
@@ -1986,11 +1886,7 @@
                     ctx.drawImage(img, startX, startY, size, size, 0, 0, 400, 400);
                     canvas.toBlob((blob) => { resolve(blob); }, 'image/webp', 0.80);
                 };
-
-                // Si la foto no se puede leer (formato incompatible), rechazamos en lugar de congelar
                 img.onerror = () => reject(new Error("Formato de imagen no válido"));
-
-                // createObjectURL es mucho más rápido y estable que FileReader
                 img.src = URL.createObjectURL(file);
             });
         }
@@ -2015,11 +1911,7 @@
             let val = e.target.value;
             val = val.replace(/[^0-9,]/g, '');
             let parts = val.split(',');
-
-            if (parts.length > 2) {
-                parts = [parts[0], parts.slice(1).join('')];
-            }
-
+            if (parts.length > 2) parts = [parts[0], parts.slice(1).join('')];
             let intPart = parts[0];
             let decPart = parts.length > 1 ? parts[1] : null;
 
@@ -2056,11 +1948,9 @@
             if (imgCam) imgCam.value = ""; if (imgGal) imgGal.value = "";
             document.getElementById('btnEliminar').style.display = 'none';
 
-            // Resetear la altura de la descripción al crear un producto nuevo
             const prodDescTx = document.getElementById('prodDesc');
             if (prodDescTx) prodDescTx.style.height = "auto";
 
-            // Forzamos al botón a desbloquearse siempre que abrimos el panel
             const btnGuardar = document.getElementById('btnGuardar');
             btnGuardar.innerText = "Guardar Nuevo";
             btnGuardar.disabled = false;
@@ -2076,7 +1966,6 @@
                 document.getElementById('btnEliminar').style.display = 'grid';
                 btnGuardar.innerText = "Actualizar";
 
-                // Recalcular la altura inmediatamente al editar para evitar que inicie colapsado
                 if (prodDescTx) {
                     prodDescTx.style.height = "auto";
                     prodDescTx.style.height = prodDescTx.scrollHeight + "px";
@@ -2099,8 +1988,6 @@
 
                 let finalImg = document.getElementById('oldImgUrl').value;
                 const file = currentImageFile;
-
-                // CAMBIO 1: Subimos el itemId aquí arriba
                 const itemId = document.getElementById('editId').value;
 
                 if (!itemId && !file) {
@@ -2110,7 +1997,7 @@
 
                 if (file) {
                     if (!IMGBB_KEY) {
-                        showAlert("Configuración Pendiente", "Este perfil de emprendedor no tiene una clave de ImgBB configurada en Google Sheets. No se pueden subir imágenes.");
+                        showAlert("Configuración Pendiente", "Este perfil no tiene una clave de ImgBB configurada en Google Sheets. No se pueden subir imágenes.");
                         btn.innerText = itemId ? "Actualizar" : "Guardar Nuevo"; btn.disabled = false; return;
                     }
 
@@ -2126,7 +2013,7 @@
                             throw new Error("No se obtuvo URL de imagen");
                         }
                     } catch (error) {
-                        showAlert("Error de subida", "Hubo un error al subir la imagen. Verifica que la clave de ImgBB asignada a este emprendedor en Google Sheets sea válida.");
+                        showAlert("Error de subida", "Hubo un error al subir la imagen. Verifica tu clave de ImgBB.");
                         btn.innerText = itemId ? "Actualizar" : "Guardar Nuevo"; btn.disabled = false; return;
                     }
                 }
@@ -2140,7 +2027,6 @@
                     shop: SHOP_ID
                 };
 
-                // CAMBIO 2: Agregamos try-catch-finally
                 try {
                     await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(datos), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: "follow" });
                     closeFormModal();
@@ -2148,7 +2034,6 @@
                 } catch (error) {
                     showAlert("Error de guardado", "Hubo un problema de conexión al guardar el producto.");
                 } finally {
-                    // Esto asegura que el botón siempre vuelva a su estado normal
                     btn.innerText = itemId ? "Actualizar" : "Guardar Nuevo";
                     btn.disabled = false;
                 }
@@ -2175,7 +2060,6 @@
             } else { openWhatsApp('', msg); }
         }
 
-        // --- CLIENTE (Búsqueda y Carrito) ---
         function toggleSearch(show) {
             const navN = document.getElementById('navNormal'), navS = document.getElementById('navSearch'), input = document.getElementById('searchInput');
             if (show) { navN.style.display = 'none'; navS.style.display = 'flex'; input.focus(); }
@@ -2204,7 +2088,6 @@
             document.getElementById('cartCount').innerText = `${items}x`;
             document.getElementById('cartTotal').innerText = `${MONEDA} ${formatPrice(total)}`;
             if (document.getElementById('ticketTotalAmount')) document.getElementById('ticketTotalAmount').innerText = `${MONEDA} ${formatPrice(total)}`;
-
             items > 0 ? document.getElementById('checkoutBar').classList.add('show') : document.getElementById('checkoutBar').classList.remove('show');
         }
 
@@ -2217,8 +2100,11 @@
 
         function renderDetailAction(prod) {
             const cont = document.getElementById('detailActionContainer');
-            if (prod.qty === 0) { cont.innerHTML = `<button class="btn-checkout" style="height:40px; border-radius:14px;" onclick="updateQty('${prod.id}', 1)">Agregar a mi lista</button>`; }
-            else { cont.innerHTML = `<div class="stepper" style="display:flex; height:100%; width:100%; justify-content:space-between; padding:0 20px; border-radius:14px; background-color: var(--primary);"><button style="font-size:26px;" onclick="updateQty('${prod.id}', -1)">-</button><span style="font-size:15px; font-weight:700;">${prod.qty} EN LISTA</span><button style="font-size:26px;" onclick="updateQty('${prod.id}', 1)">+</button></div>`; }
+            if (prod.qty === 0) { 
+                cont.innerHTML = `<button class="btn-checkout btn-checkout-list" onclick="updateQty('${prod.id}', 1)">Agregar a mi lista</button>`; 
+            } else { 
+                cont.innerHTML = `<div class="stepper-list"><button onclick="updateQty('${prod.id}', -1)">-</button><span>${prod.qty} EN LISTA</span><button onclick="updateQty('${prod.id}', 1)">+</button></div>`; 
+            }
         }
 
         function closeDetailModal() { document.getElementById('detailModal').classList.remove('show'); currentDetailId = null; }
@@ -2227,34 +2113,28 @@
 
         function renderCartModal() {
             const list = document.getElementById('ticketList'); list.innerHTML = ""; let total = 0;
-            const cartItems = products.filter(p => p.qty > 0); // Corrección: "filter" en lugar de "qtyfilter"
+            const cartItems = products.filter(p => p.qty > 0); 
             if (cartItems.length === 0) { closeCartModal(); return; }
             cartItems.forEach(p => {
                 const sub = p.qty * p.price; total += sub;
-                list.innerHTML += `<div class="ticket-item"><div style="flex:1;"><div class="ticket-name">${p.name}</div><div class="ticket-unit-price">${MONEDA} ${formatPrice(p.price)} c/u</div></div><div class="stepper" style="display:flex; width: 25%; height: 30px; background: var(--primary);"><button onclick="updateQty('${p.id}', -1)">-</button><span style="color:white; font-weight:600;">${p.qty}</span><button onclick="updateQty('${p.id}', 1)">+</button></div><div class="ticket-subtotal">${MONEDA} ${formatPrice(sub)}</div></div>`;
+                list.innerHTML += `<div class="ticket-item"><div class="flex-1"><div class="ticket-name">${p.name}</div><div class="ticket-unit-price">${MONEDA} ${formatPrice(p.price)} c/u</div></div><div class="ticket-stepper"><button onclick="updateQty('${p.id}', -1)">-</button><span>${p.qty}</span><button onclick="updateQty('${p.id}', 1)">+</button></div><div class="ticket-subtotal">${MONEDA} ${formatPrice(sub)}</div></div>`;
             });
             document.getElementById('ticketTotalAmount').innerText = `${MONEDA} ${formatPrice(total)}`;
         }
 
         function executeResetCart() { products.forEach(p => p.qty = 0); document.getElementById('customerName').value = ''; renderProducts(); updateCartBar(); document.getElementById('confirmResetModal').classList.remove('show'); closeCartModal(); }
 
-        // Aquí controlamos que si el WhatsApp del emprendedor no está configurado, detenga la acción.
         function sendWhatsAppClient() {
             if (!WHATSAPP_EMPRENDEDOR) {
-                showAlert("Atención", "El emprendedor aún no ha configurado su número de WhatsApp para recibir pedidos.");
+                showAlert("Atención", "El emprendedor aún no ha configurado su número de WhatsApp.");
                 return;
             }
 
             const name = document.getElementById('customerName').value.trim();
             if (!name) { document.getElementById('nameError').style.display = 'block'; document.getElementById('customerName').focus(); return; }
 
-            // Construye el encabezado del mensaje reemplazando {nombre} con lo escrito por el cliente
             let msg = TEXTO_MENSAJE.replace('{nombre}', name);
-
-            // Si el emprendedor olvidó poner la etiqueta {nombre} en GSheets, lo agregamos por seguridad
-            if (!msg.includes(name)) {
-                msg = msg + `\nDatos del cliente: *${name}*\n\n`;
-            }
+            if (!msg.includes(name)) msg = msg + `\nDatos del cliente: *${name}*\n\n`;
 
             let total = 0;
             products.filter(p => p.qty > 0).forEach(p => {
@@ -2267,7 +2147,6 @@
             openWhatsApp(WHATSAPP_EMPRENDEDOR, msg);
         }
 
-        // --- FUNCIONES DE CATEGORÍAS ---
         function renderCategoriesUI() {
             const container = document.getElementById('categoryContainer'), select = document.getElementById('prodCat');
             let html = `<button class="cat-btn ${currentCategory === 'todas' ? 'active' : ''}" onclick="setCategory('todas', this)">TODOS</button>`;
@@ -2282,23 +2161,15 @@
         function renderCategoryManagerList() {
             const list = document.getElementById('categoryManagerList'); list.innerHTML = "";
             categories.forEach(cat => {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; padding:10px 15px; border-radius:14px;"><span style="font-weight:600; color:var(--primary);">${cat}</span><div style="display:flex; gap:10px;"><button onclick="editCategory('${cat}')" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:12px;">Editar</button><button onclick="deleteCategory('${cat}')" style="background:none; border:none; color:var(--danger); font-weight:700; cursor:pointer; font-size:12px;">Borrar</button></div></div>`;
+                list.innerHTML += `<div class="cat-list-item"><span class="cat-list-name">${cat}</span><div class="cat-list-actions"><button onclick="editCategory('${cat}')" class="btn-text-edit">Editar</button><button onclick="deleteCategory('${cat}')" class="btn-text-delete">Borrar</button></div></div>`;
             });
         }
 
         function openCategoryManager() {
             const select = document.getElementById('currencyInput');
-            if (select.querySelector(`option[value="${MONEDA}"]`)) {
-                select.value = MONEDA;
-            } else {
-                select.value = "$";
-            }
-
-            // Sincronizar el selector de visibilidad actual
+            if (select.querySelector(`option[value="${MONEDA}"]`)) { select.value = MONEDA; } else { select.value = "$"; }
             const visSelect = document.getElementById('visibilityInput');
-            if (visSelect) {
-                visSelect.value = visibilityState.toString();
-            }
+            if (visSelect) visSelect.value = visibilityState.toString();
 
             renderCategoryManagerList();
             document.getElementById('categoryManagerModal').classList.add('show');
@@ -2347,25 +2218,20 @@
             const previewBadge = document.getElementById('previewBadge');
 
             if (body.classList.contains('modo-admin')) {
-                // Cambiar a vista de cliente (Vista Previa)
                 body.classList.remove('modo-admin');
                 body.classList.add('modo-cliente');
                 if (subtitle) subtitle.innerText = "VISTA PREVIA DEL CLIENTE";
-                if (previewBadge) previewBadge.style.display = "flex"; // Muestra el botón flotante de retorno
+                if (previewBadge) previewBadge.style.display = "flex"; 
             } else {
-                // Volver al panel de edición del administrador
                 body.classList.remove('modo-cliente');
                 body.classList.add('modo-admin');
                 if (subtitle) subtitle.innerText = "PANEL DE ADMINISTRACIÓN";
-                if (previewBadge) previewBadge.style.display = "none"; // Oculta el botón flotante de retorno
+                if (previewBadge) previewBadge.style.display = "none"; 
             }
-
-            // Volvemos a renderizar los productos y actualizar el carrito
             renderProducts();
             updateCartBar();
         }
 
-        // --- LÓGICA DE INSTALACIÓN PWA (ANDROID/CHROME) ---
         let deferredPrompt;
         const installModal = document.getElementById('installModal');
         const btnInstallConfirm = document.getElementById('btnInstallConfirm');
@@ -2373,10 +2239,7 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-
-            setTimeout(() => {
-                installModal.classList.add('show');
-            }, 2000);
+            setTimeout(() => { installModal.classList.add('show'); }, 2000);
         });
 
         btnInstallConfirm.addEventListener('click', async () => {
@@ -2384,9 +2247,6 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('El cliente aceptó la instalación');
-                }
                 deferredPrompt = null;
             }
         });
