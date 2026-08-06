@@ -1,4 +1,4 @@
-const CACHE_NAME = 'michaquetas-cache-v0.16';
+const CACHE_NAME = 'michaquetas-cache-v0.17';
 const assets = [
   './',
   './index.html',
